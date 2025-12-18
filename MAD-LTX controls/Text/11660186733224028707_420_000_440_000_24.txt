@@ -1,0 +1,2 @@
+
+The vehicle moves forward, maintaining a safe distance from a white van in front. A red taxi passes by on the left side of the road. The traffic light turns green, allowing the vehicles to proceed. The street is lined with parked cars on both sides.

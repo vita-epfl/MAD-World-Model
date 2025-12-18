@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAD: Motion Appearance Decoupling - Project Page</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #333;
+            --bg-color: #f8f9fa;
+            --slider-color: #ffffff;
+            --loader-color: #e0e0e0;
+            --bbox-color: #00ff00;
+        }
+
+        body {
+            font-family: "Outfit", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        #hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* UPDATED BLUR FROM 12px TO 6px */
+            filter: brightness(0.4) blur(6px);
+            transform: scale(1.1); 
+            transition: opacity 0.5s ease;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pub-status {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        h1.hero-title {
+            font-family: 'Raleway', sans-serif;
+            margin-top: 0;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .authors-list {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .authors-list span {
+            color: #fff;
+            margin: 0 8px;
+            display: inline-block;
+        }
+
+        .affiliations {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-link svg {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* =========================================
+           INTRO & FINDINGS STYLES
+           ========================================= */
+        
+        .intro-section {
+            padding: 60px 0 40px 0;
+            text-align: center;
+        }
+
+        .pun-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        /* Updated Pull Video Container for Intro */
+        .intro-video-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 30px auto 60px auto;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .intro-video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Key Findings Grid */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 Equal Columns */
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .finding-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #333;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .finding-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .finding-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .finding-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.2rem; /* Bigger text */
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .finding-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .finding-list li::before {
+            content: "•";
+            color: #333;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1.5rem;
+            top: 2px;
+        }
+
+        .highlight-text {
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* =========================================
+           REFERENCES STYLE
+           ========================================= */
+        .references-section {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #ddd;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .references-section h2 {
+            text-align: left;
+            margin-top: 0;
+            border-bottom: none;
+            margin-bottom: 20px;
+        }
+
+        .ref-item {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            text-indent: -30px;
+        }
+
+        .ref-id {
+            font-weight: bold;
+            color: #333;
+            margin-right: 5px;
+        }
+
+        /* =========================================
+           EXISTING CONTENT STYLES
+           ========================================= */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2, h3 { text-align: center; color: #222; }
+        h2 { margin-top: 80px; border-bottom: 2px solid #ddd; padding-bottom: 10px; font-weight: 600; }
+        h3 { margin-top: 40px; color: #555; font-weight: 400; }
+
+        p.description {
+            text-align: center;
+            max-width: 900px;
+            margin: 10px auto 30px auto;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* --- Layout Grids --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 40px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 40px; }
+
+        .header-row { margin-bottom: 10px; font-weight: bold; text-align: center; }
+        .sub-header { font-weight: normal; font-size: 0.85rem; color: #666; margin-top: 2px; }
+
+        /* --- Video Containers --- */
+        .video-wrapper {
+            width: 100%;
+            background: var(--loader-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .video-label {
+            text-align: center; font-weight: bold; font-size: 0.9rem;
+            padding: 8px; background: #e9ecef; border-bottom: 1px solid #ddd;
+        }
+
+        .video-info {
+            font-size: 0.8rem; text-align: center; padding: 5px;
+            color: #666; background: #fff; border-top: 1px solid #eee;
+        }
+
+        /* --- Comparison Slider --- */
+        .slider-container, .video-container-fixed {
+            position: relative; width: 100%; aspect-ratio: 16/9;
+            overflow: hidden; cursor: col-resize;
+        }
+        .video-container-fixed { cursor: default; }
+
+        .slider-container video, .video-container-fixed video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; transition: opacity 0.5s ease;
+        }
+        video.loaded { opacity: 1; }
+        .layer-1 { z-index: 1; }
+        .layer-2 { z-index: 2; width: 100%; }
+
+        .slider-handle {
+            position: absolute; top: 0; bottom: 0; width: 4px;
+            background: var(--slider-color); z-index: 10; pointer-events: none;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .slider-handle::after {
+            content: "< >"; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); background: var(--slider-color);
+            color: #333; padding: 2px 6px; border-radius: 4px;
+            font-size: 10px; font-weight: bold; white-space: nowrap;
+        }
+
+        /* --- Canvas Overlay --- */
+        .bbox-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5; pointer-events: none;
+        }
+
+        /* --- Text Control --- */
+        .text-control-item {
+            background: #fff; border-radius: 8px; overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: grid; 
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .text-caption-box {
+            padding: 30px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-start;
+            background: #fdfdfd; 
+            font-size: 1.1rem; 
+            font-style: italic;
+            color: #444; 
+            border-left: 1px solid #eee; 
+            text-align: left;
+        }
+        
+        .text-caption-box p {
+            margin: 0;
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-5 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .grid-5, .grid-3, .grid-2, .text-control-item, .findings-grid { grid-template-columns: 1fr; }
+            .text-caption-box { border-left: none; border-top: 1px solid #eee; padding: 15px; }
+            #hero { height: auto; padding: 100px 0; }
+            h1.hero-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<section id="hero">
+    <div class="hero-bg">
+        <video id="hero-video" autoplay muted playsinline>
+            </video>
+    </div>
+    <div class="hero-content">
+        <div class="pub-status">Under Review</div>
+        <h1 class="hero-title">MAD: Motion Appearance Decoupling<br>for efficient Driving World Models</h1>
+        
+        <div class="authors-list">
+            <span>Ahmad Rahimi<sup>*, 1</sup></span>
+            <span>Valentin Gerard<sup>*, 1</sup></span>
+            <span>Eloi Zablocki<sup>2</sup></span>
+            <span>Matthieu Cord<sup>2, 3</sup></span>
+            <span>Alexandre Alahi<sup>1</sup></span>
+        </div>
+
+        <div class="affiliations">
+            <sup>1</sup>EPFL &nbsp;&middot;&nbsp; 
+            <sup>2</sup>Valeo.ai &nbsp;&middot;&nbsp; 
+            <sup>3</sup>Sorbonne Université
+        </div>
+
+        <div class="affiliations" style="margin-top: -15px; font-size: 0.9rem; opacity: 0.8;">
+            Contact: first.last@epfl.ch
+        </div>
+
+        <div class="header-buttons">
+            <a href="#" class="btn-link">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                arXiv
+            </a>
+            <a href="#" class="btn-link">
+                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                Code
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="intro-section">
+        <div class="pun-title">MAD about Efficiency?</div>
+        <p class="description">
+            We propose an efficient adaptation framework that converts generalist video diffusion models into controllable driving world models with minimal supervision. The key idea is to decouple <b>motion</b> from <b>appearance synthesis</b>. First, the model is adapted to predict structured motion in a simplified form: videos of skeletonized agents and scene elements, focusing learning on physical and social plausibility. Then, the same backbone is reused to synthesize realistic RGB videos conditioned on these motion sequences, effectively “dressing” the motion with texture and lighting.
+        </p>
+        
+        <div class="intro-video-container">
+            <video class="lazy-video" muted loop playsinline>
+                <source src="./pull_video.mov" type="video/quicktime">
+                <source src="./pull_video.mov" type="video/mp4"> Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <h2 style="margin-top: 20px;">Key Findings of MAD</h2>
+    <p class="description">
+        Our experiments show this decoupled approach is exceptionally efficient: adapting SVD [2], we match prior SOTA models with <b>less than 6% of their compute</b>. Scaling to LTX [1], our MAD-LTX model <b>outperforms all open-source competitors</b>.
+    </p>
+    
+    <div class="findings-grid">
+        <div class="finding-card">
+            <div class="finding-title">Proof-of-Concept: MAD-SVD</div>
+            <ul class="finding-list">
+                <li>Reproduces VISTA [4] performance starting from the same backbone Stable Video Diffusion (SVD) [2].</li>
+                <li>Using <span class="highlight-text">12× less data</span> (139 hrs vs. 1,700).</li>
+                <li>Using <span class="highlight-text">16× less compute</span> (1,500 GPU-hrs vs. 25,000).</li>
+            </ul>
+        </div>
+
+        <div class="finding-card">
+            <div class="finding-title">Scaling to SOTA: MAD-LTX 2B & 13B</div>
+            <ul class="finding-list">
+                <li>Extremely low training cost: <span class="highlight-text">130 GPU-hrs</span> (2B) and <span class="highlight-text">700 GPU-hrs</span> (13B), using only 130 hours of driving video.</li>
+                <li><span class="highlight-text">SOTA performance</span> among open-source models for video generation quality.</li>
+                <li>Outperforms standard LTX [1] training on both <span class="highlight-text">video generation</span> and <span class="highlight-text">open-loop planning</span>.</li>
+                <li><span class="highlight-text">Faster inference</span> than previous models, with support for <span class="highlight-text">text</span>, <span class="highlight-text">ego trajectory</span>, and <span class="highlight-text">object control</span>.</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <h2>Our MAD-LTX Generations</h2>
+    
+    <h3>High-Fidelity Appearance Transfer</h3>
+    <p class="description">
+        Our Appearance Synthesizer effectively "dresses" the sparse predicted motion signals with realistic textures and lighting. You can verify the alignment between predicted motion (skeleton) and synthesized appearance (RGB) by moving the vertical slider in each video.
+    </p>
+    <div id="gen-sub1" class="grid-2"></div>
+
+    <h3>New Agent Generation</h3>
+    <p class="description">
+        A key capability of our Motion Forecaster is the synthesis of agents entering the scene that were not present in the initial frame. The model predicts plausible trajectories for new vehicles and pedestrians, which are then seamlessly rendered by the Appearance Synthesizer, enriching the scene's dynamism.
+    </p>
+    <div id="gen-sub2" class="grid-2"></div>
+
+    <h3>Implicit Occlusion Modeling</h3>
+    <p class="description">
+        While our pose predictor is trained specifically on cars and pedestrians, it exhibits an implicit understanding of unmodeled occluders, such as trucks. As shown below, the model avoids predicting skeletons where a truck is present (Video 1) or correctly handles the occlusion when a truck enters the scene (Video 2), ensuring that the Appearance Synthesizer does not render conflicting geometry in those regions.
+    </p>
+    <div id="gen-sub3" class="grid-2"></div>
+
+    <h3>Robust Pedestrian Synthesis</h3>
+    <p class="description">
+        Pedestrians often present a challenge for driving world model due to their non-rigid motion. By conditioning on explicit skeleton sequences, MAD-LTX generates pedestrians with high temporal consistency and realistic gait.
+    </p>
+    <div id="gen-sub4" class="grid-2"></div>
+
+
+    <h2>Comparison with other Driving World Models</h2>
+    <p class="description">
+        The generations of MAD-LTX are compared to other baselines, all given the same starting frame and caption (for models that accept captions).
+        We show comparisons at two scales: 13B and 2B parameters. Note that MAD-LTX is trained with significantly less computational resources than the baselines.
+        The first 3 examples show cases where our models generations are clearly better. We have also improved pedestrian motion compared to prior work, while still there is room for improvement compared to Cosmos Predict 2 [5].
+    </p>
+
+    <h3>Comparison with MAD-LTX-13B</h3>
+    <div class="grid-5 header-row">
+        <div>MAD-LTX 13B<div class="sub-header">700 GPUh</div></div>
+        <div>Vista [4]<div class="sub-header">25000 GPUh</div></div>
+        <div>GEM [3]<div class="sub-header">50000 GPUh</div></div>
+        <div>Cosmos Predict1-14B [5]<div class="sub-header">Unknown</div></div>
+        <div>Cosmos Predict2-14B [5]<div class="sub-header">Unknown</div></div>
+    </div>
+    <div id="comp-13b" class="grid-5"></div>
+
+    <h3>Comparison with MAD-LTX-2B</h3>
+    <div class="grid-5 header-row">
+        <div>MAD-LTX 2B<div class="sub-header">130 GPUh</div></div>
+        <div>Vista [4]<div class="sub-header">25000 GPUh</div></div>
+        <div>GEM [3]<div class="sub-header">50000 GPUh</div></div>
+        <div>Cosmos Predict1-7B [5]<div class="sub-header">Unknown</div></div>
+        <div>Cosmos Predict2-2B [5]<div class="sub-header">Unknown</div></div>
+    </div>
+    <div id="comp-2b" class="grid-5"></div>
+
+
+    <h2>MAD-SVD Results</h2>
+    <p class="description">
+        Comparisons of MAD-SVD against VISTA [4] and GEM [3], all derived from the same Stable Video Diffusion [2] backbone. We achieve the same video generation quality using only a fraction of their training requirements, while the use of poses generally improves the visual and motion quality of the generated pedestrians and cyclists.
+    </p>
+    <div class="grid-3 header-row">
+        <div>MAD-SVD<div class="sub-header">1500 GPUh</div></div>
+        <div>VISTA<div class="sub-header">25,000 GPUh</div></div>
+        <div>GEM<div class="sub-header">50,000 GPUh</div></div>
+    </div>
+    <div id="comp-svd" class="grid-3"></div>
+
+
+    <h2>MAD-LTX Controls</h2>
+    <p class="description">
+        Our model accepts 3 types of control signals: the <b>ego movement</b> control which controls how the ego vehicle moves in the scene, the <b>object movement</b> control through which we can move objects of interest in the environment, and the <b>text captions</b>.
+    </p>
+
+    <h3>Ego Movement Control</h3>
+    <p class="description">
+        Our motion forecaster accepts our ego-motion's representation as additional input to condition its generation on the desired ego movement. We extract this behaviour from ground truth video, which you can see by moving the vertical line. We then condition the generation of MAD-LTX 13B using this motion representation, and get our 'conditional' generation results. The 'unconditional' column shows videos generated by the same 13B model without having access to the ego movement. As you can see, the conditional generations follow the ego movement closely, while the unconditional generations show different ego movements.
+    </p>
+
+    <div class="grid-3 header-row">
+        <div>Ground Truth</div>
+        <div>Conditional</div>
+        <div>Unconditional</div>
+    </div>
+    <div id="ctrl-ego" class="grid-3"></div>
+
+    <h3>Object Movement Control</h3>
+    <p class="description">
+        We use bounding boxes to control the movement of other objects in the scene. Below you can see how we can make cars turn or move in the scene given our bounding boxes, while the unconditional model shows a different behaviour for that car. The conditional videos show the control bounding boxes (green) overlaid on the generation.
+        As you can see, our model is able to follow the bounding box controls closely, leading to turning cars to left or keeping them at the desired position on the road.
+    </p>
+    <div class="grid-2 header-row">
+        <div>Conditional (Control)</div>
+        <div>Unconditional</div>
+    </div>
+    <div id="ctrl-obj" class="grid-2"></div>
+
+    <h3>Text Control</h3>
+    <p class="description">
+        Our MAD-LTX keeps the text prompt functionality of the Base LTX model [1], and adjusts it to driving scenarios. Below you can see examples of how our model is following these prompts in its generations.
+    </p>
+    
+    <div class="grid-2 header-row">
+        <div>Generated Video</div>
+        <div>Text Control</div>
+    </div>
+    <div id="ctrl-text" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px;"></div>
+
+
+    <h2>Ablation Studies</h2>
+    <p class="description">
+        We conduct three ablation studies to support our main design choices: Firstly, we show the effect of the <b>Noise Injection</b> in appearance synthesizer training. Then, we compare two different intermediate representations, <b>HDMaps</b> and <b>Panoptic Segmentations</b>.
+    </p>
+
+    <h3>Noise Injection</h3>
+    <p class="description">
+        The introduction of noise injection block to the model has made significant improvements in the visual quality of the cars that enter the scene (the first 2 examples), and details in the parked cars (last example) for which the predicted pose are noisy.
+    </p>
+    <div class="grid-2 header-row">
+        <div>Noised</div>
+        <div>Unnoised</div>
+    </div>
+    <div id="ablation-noise" class="grid-2"></div>
+
+    <h3>Panoptic Segmentation</h3>
+    <p class="description">
+        Panoptic segmentation looses information about the cars, so we observe cars moving backward in the first 2 examples. It is also sometimes hard to distinguish different cars, leading to cars dissapearing or merging into others in crowded scenarios.
+    </p>
+    <div class="grid-2 header-row">
+        <div>MAD-LTX</div>
+        <div>Segmentation Baseline</div>
+    </div>
+    <div id="ablation-seg" class="grid-2"></div>
+
+    <h3>HDMap</h3>
+    <p class="description">
+        Predicting in the HDMap space is not easy and harder to learn for the model. As a result there are many weird vehicle movements in the videos shown below. It is also sometimes hard to synthesize high quality cars given the 3D bounding boxes, especially for pedestrian.
+    </p>
+    <div class="grid-2 header-row">
+        <div>MAD-LTX</div>
+        <div>HDMap Baseline</div>
+    </div>
+    <div id="ablation-hdmap" class="grid-2"></div>
+
+    <div class="references-section">
+        <h2>References</h2>
+        <div class="ref-item"><span class="ref-id">[1]</span> HaCohen, Y., et al. "LTX-Video: Realtime Video Latent Diffusion." (2025).</div>
+        <div class="ref-item"><span class="ref-id">[2]</span> Blattmann, A., et al. "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets." (2023).</div>
+        <div class="ref-item"><span class="ref-id">[3]</span> Hassan, M., et al. "GEM: A Generalizable Ego-Vision Multimodal World Model..." CVPR 2025.</div>
+        <div class="ref-item"><span class="ref-id">[4]</span> Gao, S., et al. "Vista: A Generalizable Driving World Model with High Fidelity and Versatile Controllability." NeurIPS 2024.</div>
+        <div class="ref-item"><span class="ref-id">[5]</span> NVIDIA, et al. "Cosmos World Foundation Model Platform for Physical AI." (2025).</div>
+    </div>
+
+</div>
+
+<script>
+    /**
+     * ==========================================================
+     * CONFIGURATION: FILE LISTS
+     * ==========================================================
+     */
+    
+    /* NEW: Subsections for MAD-LTX Generations 
+       Each item: { file: "filename", model: "13B" or "2B", path: "subfolder/" }
+    */
+    const sub1_files = [
+        { file: "14300007604205869133_1160_000_1180_000_96.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "scB_bYG27yI_83616.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        // UPDATED VIDEO 3 for Sub1
+        { file: "Eg769aAzmxQ_36192.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "uvRaCzWpFrQ_76128.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+    ];
+
+    const sub2_files = [
+        { file: "nOP1blfMCTg_70560.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "nOP1blfMCTg_26688.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "scB_bYG27yI_54480.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" },
+        { file: "bqiM7F6TDfo_17184.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+    ];
+
+    const sub3_files = [
+        // Special case: Video 1 from Comp 2B list. Path is MAD-LTX comparisons/2B/MAD-LTX/
+        { file: "nOP1blfMCTg_6240.mp4", model: "MAD-LTX 2B", path: "MAD-LTX comparisons/2B/MAD-LTX/" },
+        { file: "11660186733224028707_420_000_440_000_144.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" }
+    ];
+
+    const sub4_files = [
+        { file: "89454214745557131_3160_000_3180_000_0.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "nOP1blfMCTg_25392.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "fr9s3jqYBvw_12624.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "G45uV97Bkcc_47184.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+    ];
+
+
+    const comp_13b_base = [
+        "jKrJezTsVUk_12576.mp4",
+        "nOP1blfMCTg_37104.mp4",
+        "Qb5UT3pSxjI_13728.mp4",
+        "nOP1blfMCTg_25392.mp4",
+        "nOP1blfMCTg_38112.mp4",
+        "JS0gJxhFFJ8_5904.mp4",
+    ];
+
+    const comp_2b_base = [
+        "Eg769aAzmxQ_91920.mp4",
+        "Qb5UT3pSxjI_79968.mp4",
+        "nOP1blfMCTg_6240.mp4",
+        "j4qcANjnLxc_5664.mp4",
+        "JS0gJxhFFJ8_57120.mp4",
+        "bqiM7F6TDfo_17184.mp4",
+    ];
+
+    const svd_base = [
+        "nOP1blfMCTg_25392.mp4",
+        "RyDbs6AnzX0_19152.mp4",
+        "G45uV97Bkcc_48720.mp4",
+        "nOP1blfMCTg_70560.mp4",
+        "94EDSmtNCxM_35376.mp4",
+    ];
+
+    const ctrl_ego_ids = [
+        "14383152291533557785_240_000_260_000_48.mp4",
+        "17136314889476348164_979_560_999_560_0.mp4",
+        "18045724074935084846_6615_900_6635_900_120.mp4",
+    ];
+
+    const abl_noise_base = [
+        "JS0gJxhFFJ8_57120.mp4",
+        "scB_bYG27yI_54480.mp4",
+        "JS0gJxhFFJ8_5904.mp4",
+    ];
+
+    const abl_seg_base = [
+        "12657584952502228282_3940_000_3960_000_0.mp4",
+        "17694030326265859208_2340_000_2360_000_0.mp4",
+        "9024872035982010942_2578_810_2598_810_0.mp4"
+    ];
+
+    const abl_hdmap_base = [
+        "1943605865180232897_680_000_700_000_0.mp4",
+        "3015436519694987712_1300_000_1320_000_0.mp4",
+        "5847910688643719375_180_000_200_000_0.mp4"
+    ];
+
+
+    /**
+     * ==========================================================
+     * MANUAL DATA ENTRY AREA (REQUIRED FOR OFFLINE USE)
+     * ==========================================================
+     */
+
+    // 1. OBJECT CONTROL BBOX DATA
+    const CTRL_OBJ_DATA = {
+        "1105338229944737854_1280_000_1300_000_48":
+            /* PASTE JSON CONTENT HERE -> */ [
+  [562, 400, 700, 489], [560, 401, 700, 487], [558, 401, 700, 487], [556, 400, 701, 485],
+  [553, 400, 702, 485], [550, 399, 703, 484], [547, 400, 703, 481], [544, 399, 703, 480],
+  [540, 399, 703, 480], [537, 399, 701, 479], [533, 399, 703, 478], [528, 398, 702, 476],
+  [520, 396, 706, 475], [517, 396, 707, 474], [512, 396, 707, 474], [508, 395, 705, 472],
+  [503, 393, 706, 470], [498, 390, 700, 466], [494, 389, 696, 463], [489, 392, 699, 467],
+  [485, 397, 694, 471], [481, 399, 688, 473], [477, 399, 686, 472], [477, 397, 678, 469],
+  [480, 393, 663, 464], [476, 394, 658, 465], [471, 396, 655, 465], [467, 396, 647, 465],
+  [464, 395, 644, 464], [460, 394, 637, 465], [456, 395, 630, 464], [455, 395, 622, 464],
+  [465, 395, 601, 464], null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null
+],
+        "12496433400137459534_120_000_140_000_168":
+            /* PASTE JSON CONTENT HERE -> */ [[570, 364, 632, 411], [564, 357, 625, 405], [565, 350, 623, 398], [564, 347, 621, 393], [563, 347, 620, 393], [564, 354, 623, 399], [562, 365, 622, 410], [560, 367, 620, 413], [559, 366, 619, 411], [557, 361, 614, 407], [556, 355, 614, 400], [555, 351, 613, 396], [555, 350, 616, 395], [556, 350, 616, 397], [558, 352, 615, 398], [558, 353, 616, 399], [557, 354, 620, 400], [559, 354, 620, 400], [561, 353, 623, 399], [563, 352, 624, 398], [565, 353, 625, 399], [566, 356, 625, 401], [564, 358, 629, 403], [566, 359, 629, 405], [570, 360, 627, 406], [565, 359, 630, 405], [570, 358, 632, 404], [574, 356, 633, 402], [576, 355, 635, 400], [575, 354, 636, 400], [579, 355, 638, 399], [578, 353, 641, 398], [579, 352, 642, 396], [580, 350, 643, 394], [582, 350, 646, 393], [587, 348, 647, 392], [588, 344, 653, 388], [592, 342, 656, 385], [595, 341, 658, 385], [598, 341, 660, 384], [601, 341, 664, 385], [604, 343, 666, 386], [608, 348, 665, 390], [611, 348, 670, 391], [613, 347, 675, 390], [615, 346, 681, 389], [619, 345, 677, 388], [621, 346, 680, 388], [626, 350, 686, 393], [628, 354, 694, 398], [634, 359, 694, 402], [634, 362, 696, 406], [639, 365, 700, 408], [642, 367, 703, 410], [646, 370, 709, 412], [646, 370, 710, 413], [653, 370, 710, 413], [656, 371, 715, 414], [659, 371, 717, 415], [661, 370, 718, 415], [663, 373, 723, 417]],
+
+        "18446264979321894359_3700_000_3720_000_72":
+            /* PASTE JSON CONTENT HERE -> */ [
+  [441, 433, 712, 641], [441, 432, 713, 639], [442, 432, 712, 639], [442, 432, 709, 637],
+  [442, 431, 711, 638], [443, 431, 710, 636], [443, 430, 708, 634], [443, 430, 706, 633],
+  [443, 430, 705, 632], [444, 429, 704, 630], [444, 429, 702, 628], [444, 428, 701, 626],
+  [445, 428, 699, 624], [445, 427, 696, 622], [445, 441, 695, 619], [445, 424, 693, 616],
+  [446, 423, 692, 615], [446, 423, 690, 613], [444, 423, 696, 612], [446, 425, 689, 611],
+  [445, 425, 692, 611], [445, 436, 691, 610], [442, 439, 694, 610], [441, 439, 696, 610],
+  [439, 437, 697, 609], [437, 436, 700, 603], [435, 427, 702, 601], [432, 426, 705, 599],
+  [429, 425, 708, 596], [427, 424, 711, 596], [420, 426, 715, 592], [415, 436, 719, 591],
+  [405, 426, 724, 590], [395, 427, 730, 589], [385, 423, 734, 590], [375, 435, 737, 590],
+  [365, 423, 740, 589], [355, 423, 746, 590], [345, 424, 754, 591], [335, 436, 749, 591],
+  [325, 436, 744, 589], [315, 434, 745, 592], [305, 434, 750, 594], [295, 434, 751, 593],
+  [285, 434, 743, 594], [278, 433, 722, 595], [272, 432, 693, 593], [270, 432, 651, 594],
+  [270, 433, 605, 595], [270, 436, 556, 601], [270, 437, 504, 609], null, null, null,
+  null, null, null, null, null, null, null
+]
+    };
+
+    // 2. TEXT CONTROL CAPTIONS
+    // Keys are the filenames
+    // Values are the string content of the .txt files
+    // UPDATE: Bold formatting added
+    const CTRL_TEXT_DATA = {
+        "11660186733224028707_420_000_440_000_24":
+            "<b>The vehicle moves forward</b>, maintaining a safe distance from a white van in front. A red taxi passes by on the left side of the road. <b>The traffic light turns green</b>, allowing the vehicles to proceed. The street is lined with parked cars on both sides.",
+
+        "13941626351027979229_3363_930_3383_930_168":
+            "<b>A person approaches to enter a black SUV</b> parked in a lot. The SUV remains stationary.",
+
+        "5847910688643719375_180_000_200_000_0":
+            "A pedestrian crosses the street from left to right. A silver car stops at a red light and proceeds when the light turns green. <b>A cyclist rides on the right side of the road</b>.\n"
+    };
+
+
+    /**
+     * ==========================================================
+     * DOM GENERATION FUNCTIONS
+     * ==========================================================
+     */
+
+    function createSliderHTML(bgSrc, fgSrc, label) {
+        const id = 'slider-' + Math.random().toString(36).substr(2, 9);
+        return `
+            <div class="video-wrapper">
+                ${label ? `<div class="video-label">${label}</div>` : ''}
+                <div class="slider-container" id="${id}">
+                    <video class="layer-1 lazy-video" muted loop playsinline data-src="${bgSrc}"></video>
+                    <video class="layer-2 lazy-video" muted loop playsinline data-src="${fgSrc}"></video>
+                    <div class="slider-handle"></div>
+                </div>
+            </div>
+        `;
+    }
+
+    function createVideoHTML(src, label, info) {
+        return `
+            <div class="video-wrapper">
+                ${label ? `<div class="video-label">${label}</div>` : ''}
+                <div class="video-container-fixed">
+                    <video class="lazy-video" muted loop playsinline data-src="${src}"></video>
+                </div>
+                ${info ? `<div class="video-info">${info}</div>` : ''}
+            </div>
+        `;
+    }
+
+    // SPECIAL: Canvas Overlay Video for BBox
+    function createCanvasVideoHTML(src, fileKey) {
+        return `
+            <div class="video-wrapper bbox-wrapper" data-key="${fileKey}">
+                <div class="video-container-fixed">
+                    <video class="lazy-video bbox-video" muted loop playsinline data-src="${src}"></video>
+                    <canvas class="bbox-overlay" width="1056" height="704"></canvas>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * ==========================================================
+     * SLIDER INTERACTION LOGIC
+     * ==========================================================
+     */
+    function initSlider(containerId) {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+
+        const fgVideo = container.querySelector('.layer-2');
+        const handle = container.querySelector('.slider-handle');
+        let isDragging = false;
+
+        function updateSlider(x) {
+            const rect = container.getBoundingClientRect();
+            let xPos = x - rect.left;
+            if (xPos < 0) xPos = 0;
+            if (xPos > rect.width) xPos = rect.width;
+
+            const percentage = (xPos / rect.width) * 100;
+            handle.style.left = `${percentage}%`;
+            fgVideo.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+        }
+
+        const initialX = container.getBoundingClientRect().left + (container.offsetWidth * 0.15);
+        updateSlider(initialX);
+
+        container.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.clientX);
+        });
+
+        container.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.touches[0].clientX);
+        });
+    }
+
+    /**
+     * ==========================================================
+     * BOUNDING BOX LOGIC (UPDATED FOR FPS MATCHING)
+     * ==========================================================
+     */
+    class BBoxDrawer {
+        constructor(wrapper) {
+            this.wrapper = wrapper;
+            this.video = wrapper.querySelector('video');
+            this.canvas = wrapper.querySelector('canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.fileKey = wrapper.dataset.key;
+
+            // Get data from global object instead of fetch
+            this.rawBBoxes = CTRL_OBJ_DATA[this.fileKey];
+
+            if(this.rawBBoxes && this.rawBBoxes.length > 0) {
+                this.startLoop();
+            } else {
+                console.warn("No manual data found for:", this.fileKey);
+            }
+        }
+
+        startLoop() {
+            const loop = () => {
+                if (this.video.paused || this.video.ended) {
+                    requestAnimationFrame(loop);
+                    return;
+                }
+                this.draw();
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+        }
+
+        draw() {
+            // Clear canvas
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            // SYNC LOGIC:
+            // We don't duplicate the array. We calculate the index based on time.
+            // Source BBoxes are at 12 FPS.
+            const BBOX_FPS = 12;
+            const currentTime = this.video.currentTime;
+
+            // Calculate which bbox frame corresponds to current video time
+            const frameIndex = Math.floor(currentTime * BBOX_FPS);
+
+            if (frameIndex < this.rawBBoxes.length) {
+                const box = this.rawBBoxes[frameIndex];
+                if (box) {
+                    // box is [x1, y1, x2, y2]
+                    // Apply offset: move left by 112
+                    const x1 = box[0] - 112;
+                    const y1 = box[1];
+                    const x2 = box[2] - 112;
+                    const y2 = box[3];
+
+                    const w = x2 - x1;
+                    const h = y2 - y1;
+
+                    this.ctx.strokeStyle = '#00ff00';
+                    this.ctx.lineWidth = 4;
+                    this.ctx.strokeRect(x1, y1, w, h);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * ==========================================================
+     * RENDERERS
+     * ==========================================================
+     */
+    function renderGenerations() {
+        // HELPER TO RENDER A LIST INTO A DIV
+        const renderList = (divId, list) => {
+            const div = document.getElementById(divId);
+            list.forEach(item => {
+                let bgSrc, fgSrc;
+                if(item.path.includes("comparisons")) {
+                     bgSrc = `${item.path}rgb_${item.file}`;
+                     fgSrc = `${item.path}pose_${item.file}`;
+                } else {
+                     bgSrc = `${item.path}${item.file}`;
+                     fgSrc = `${item.path}pose_${item.file}`;
+                }
+
+                const d = document.createElement('div');
+                // Use the 'model' property as the label
+                d.innerHTML = createSliderHTML(bgSrc, fgSrc, item.model);
+                div.appendChild(d);
+                initSlider(d.querySelector('.slider-container').id);
+            });
+        };
+
+        renderList('gen-sub1', sub1_files);
+        renderList('gen-sub2', sub2_files);
+        renderList('gen-sub3', sub3_files);
+        renderList('gen-sub4', sub4_files);
+    }
+
+    function renderComparisons() {
+        const div13 = document.getElementById('comp-13b');
+        comp_13b_base.forEach(f => {
+            const mad_html = createSliderHTML(
+                `MAD-LTX comparisons/13B/MAD-LTX/rgb_${f}`,
+                `MAD-LTX comparisons/13B/MAD-LTX/pose_${f}`
+            );
+            const row = [
+                {html: mad_html, type: 'slider'},
+                {html: createVideoHTML(`MAD-LTX comparisons/13B/Vista/${f}`, null, null), type: 'vid'},
+                {html: createVideoHTML(`MAD-LTX comparisons/13B/GEM/${f}`, null, null), type: 'vid'},
+                {html: createVideoHTML(`MAD-LTX comparisons/13B/Predict1-14b/${f}`, null, null), type: 'vid'},
+                {html: createVideoHTML(`MAD-LTX comparisons/13B/Predict2-14b/${f}`, null, null), type: 'vid'}
+            ];
+            row.forEach(item => {
+                const d = document.createElement('div');
+                d.innerHTML = item.html;
+                div13.appendChild(d);
+                if(item.type === 'slider') initSlider(d.querySelector('.slider-container').id);
+            });
+        });
+
+        const div2 = document.getElementById('comp-2b');
+        comp_2b_base.forEach(f => {
+            const mad_html = createSliderHTML(
+                `MAD-LTX comparisons/2B/MAD-LTX/rgb_${f}`,
+                `MAD-LTX comparisons/2B/MAD-LTX/pose_${f}`
+            );
+            const items = [
+                { html: mad_html, isSlider: true },
+                { src: `MAD-LTX comparisons/2B/Vista/${f}`, isSlider: false },
+                { src: `MAD-LTX comparisons/2B/GEM/${f}`, isSlider: false },
+                { src: `MAD-LTX comparisons/2B/Predict1-7b/${f}`, isSlider: false },
+                { src: `MAD-LTX comparisons/2B/Predict2-2b/${f}`, isSlider: false }
+            ];
+            items.forEach(item => {
+                const d = document.createElement('div');
+                if(item.isSlider) {
+                    d.innerHTML = item.html;
+                    div2.appendChild(d);
+                    initSlider(d.querySelector('.slider-container').id);
+                } else {
+                    d.innerHTML = createVideoHTML(item.src, null, null);
+                    div2.appendChild(d);
+                }
+            });
+        });
+    }
+
+    function renderSVD() {
+        const divSVD = document.getElementById('comp-svd');
+        svd_base.forEach(f => {
+            const svd_html = createSliderHTML(
+                `MAD-SVD comparisons/MAD-SVD/rgb_${f}`,
+                `MAD-SVD comparisons/MAD-SVD/pose_${f}`
+            );
+            const d1 = document.createElement('div'); d1.innerHTML = svd_html; divSVD.appendChild(d1); initSlider(d1.querySelector('.slider-container').id);
+            const d2 = document.createElement('div'); d2.innerHTML = createVideoHTML(`MAD-SVD comparisons/VISTA/${f}`, null, null); divSVD.appendChild(d2);
+            const d3 = document.createElement('div'); d3.innerHTML = createVideoHTML(`MAD-SVD comparisons/GEM/${f}`, null, null); divSVD.appendChild(d3);
+        });
+    }
+
+    function renderControls() {
+        // EGO
+        const divEgo = document.getElementById('ctrl-ego');
+        ctrl_ego_ids.forEach(f => {
+            const items = [
+                { bg: `MAD-LTX controls/Ego/GT/rgb_${f}`, fg: `MAD-LTX controls/Ego/GT/motion_${f}` },
+                { bg: `MAD-LTX controls/Ego/Conditional/rgb_${f}`, fg: `MAD-LTX controls/Ego/Conditional/pose_${f}` },
+                { bg: `MAD-LTX controls/Ego/Unconditional/rgb_${f}`, fg: `MAD-LTX controls/Ego/Unconditional/pose_${f}` }
+            ];
+            items.forEach(item => {
+                const d = document.createElement('div');
+                d.innerHTML = createSliderHTML(item.bg, item.fg);
+                divEgo.appendChild(d);
+                initSlider(d.querySelector('.slider-container').id);
+            });
+        });
+
+        // OBJECT (Use keys from the Manual Data Object)
+        const divObj = document.getElementById('ctrl-obj');
+        // We iterate over the keys defined in the config at top
+        const objKeys = Object.keys(CTRL_OBJ_DATA);
+
+        objKeys.forEach(key => {
+            // 1. Conditional with BBox Overlay
+            const condVideo = `MAD-LTX controls/Object/Cond/${key}.mp4`;
+
+            const d1 = document.createElement('div');
+            // Pass the key, not the URL, to the creator
+            d1.innerHTML = createCanvasVideoHTML(condVideo, key);
+            divObj.appendChild(d1);
+            new BBoxDrawer(d1.querySelector('.bbox-wrapper'));
+
+            // 2. Unconditional
+            const uncondVideo = `MAD-LTX controls/Object/Uncond/${key}.mp4`;
+            const d2 = document.createElement('div');
+            d2.innerHTML = createVideoHTML(uncondVideo);
+            divObj.appendChild(d2);
+        });
+
+        // TEXT (Use keys from the Manual Data Object)
+        const divText = document.getElementById('ctrl-text');
+        const txtKeys = Object.keys(CTRL_TEXT_DATA);
+
+        txtKeys.forEach(key => {
+            const vidSrc = `MAD-LTX controls/Text/${key}.mp4`;
+            const captionText = CTRL_TEXT_DATA[key];
+
+            const row = document.createElement('div');
+            row.className = 'text-control-item';
+
+            const vidHtml = createVideoHTML(vidSrc);
+
+            const txtDiv = document.createElement('div');
+            txtDiv.className = 'text-caption-box';
+            // UPDATE: Wrap in paragraph tag to ensure proper block display
+            txtDiv.innerHTML = '<p>' + captionText + '</p>';
+
+            row.innerHTML = vidHtml;
+            row.appendChild(txtDiv);
+            divText.appendChild(row);
+        });
+    }
+
+    function renderAblations() {
+        const divNoise = document.getElementById('ablation-noise');
+        abl_noise_base.forEach(f => {
+            const d1 = document.createElement('div'); d1.innerHTML = createSliderHTML(`ablations/noising/Noised/rgb_${f}`, `ablations/noising/Noised/pose_${f}`); divNoise.appendChild(d1); initSlider(d1.querySelector('.slider-container').id);
+            const d2 = document.createElement('div'); d2.innerHTML = createSliderHTML(`ablations/noising/Unnoised/rgb_${f}`, `ablations/noising/Unnoised/pose_${f}`); divNoise.appendChild(d2); initSlider(d2.querySelector('.slider-container').id);
+        });
+        const divSeg = document.getElementById('ablation-seg');
+        abl_seg_base.forEach(f => {
+            const d1 = document.createElement('div'); d1.innerHTML = createSliderHTML(`ablations/Seg/MAD/rgb_${f}`, `ablations/Seg/MAD/pose_${f}`); divSeg.appendChild(d1); initSlider(d1.querySelector('.slider-container').id);
+            const d2 = document.createElement('div'); d2.innerHTML = createSliderHTML(`ablations/Seg/Seg/rgb_${f}`, `ablations/Seg/Seg/seg_${f}`); divSeg.appendChild(d2); initSlider(d2.querySelector('.slider-container').id);
+        });
+        const divMap = document.getElementById('ablation-hdmap');
+        abl_hdmap_base.forEach(f => {
+            const d1 = document.createElement('div'); d1.innerHTML = createSliderHTML(`ablations/HDMap/MAD/rgb_${f}`, `ablations/HDMap/MAD/pose_${f}`); divMap.appendChild(d1); initSlider(d1.querySelector('.slider-container').id);
+            const d2 = document.createElement('div'); d2.innerHTML = createSliderHTML(`ablations/HDMap/HDMap/rgb_${f}`, `ablations/HDMap/HDMap/hdmap_${f}`); divMap.appendChild(d2); initSlider(d2.querySelector('.slider-container').id);
+        });
+    }
+
+
+    /**
+     * ==========================================================
+     * LAZY LOADING LOGIC
+     * ==========================================================
+     */
+    function initLazyLoader() {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    if (video.dataset.src) {
+                        video.src = video.dataset.src;
+                        delete video.dataset.src;
+                        video.load();
+                        video.classList.add('loaded');
+                    }
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) playPromise.catch(e => {});
+                } else {
+                    if (!video.paused) video.pause();
+                }
+            });
+        }, { root: null, rootMargin: '200px', threshold: 0.1 });
+
+        document.querySelectorAll('.lazy-video').forEach(v => observer.observe(v));
+    }
+
+    /**
+     * ==========================================================
+     * HERO VIDEO PLAYLIST LOGIC
+     * ==========================================================
+     */
+    function initHeroPlaylist() {
+        const heroVideo = document.getElementById('hero-video');
+        
+        // Custom playlist for the header background
+        const hero_files = [
+            "scB_bYG27yI_83616.mp4",
+            "uvRaCzWpFrQ_50160.mp4",
+            "89454214745557131_3160_000_3180_000_0.mp4",
+            "Eg769aAzmxQ_36192.mp4",
+            "fr9s3jqYBvw_12624.mp4",
+            "nOP1blfMCTg_25392.mp4",
+            "nOP1blfMCTg_26688.mp4"
+        ];
+
+        // Map them to the correct path
+        const playlist = hero_files.map(f => `MAD-Generations/13B/${f}`);
+        
+        let currentVideoIndex = 0;
+
+        if (heroVideo && playlist.length > 0) {
+            // Initial load
+            heroVideo.src = playlist[currentVideoIndex];
+            
+            // On end, play next
+            heroVideo.addEventListener('ended', () => {
+                currentVideoIndex = (currentVideoIndex + 1) % playlist.length;
+                heroVideo.src = playlist[currentVideoIndex];
+                heroVideo.play().catch(e => console.log('Auto-play blocked', e));
+            });
+        }
+    }
+
+
+    // MAIN INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+        initHeroPlaylist(); // Start hero background video
+        renderGenerations();
+        renderComparisons();
+        renderSVD();
+        renderControls();
+        renderAblations();
+        initLazyLoader();
+    });
+
+</script>
+</body>
+</html>
