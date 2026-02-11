@@ -660,40 +660,39 @@
        CONFIG VARIABLES
        ========================================================== */
     const sub1_files = [
-        { file: "14300007604205869133_1160_000_1180_000_96.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "scB_bYG27yI_83616.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "Eg769aAzmxQ_36192.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "uvRaCzWpFrQ_76128.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+        { file: "14300007604205869133_1160_000_1180_000_96.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "scB_bYG27yI_83616.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "Eg769aAzmxQ_36192.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "uvRaCzWpFrQ_76128.webm", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
     ];
 
     const sub2_files = [
-        { file: "nOP1blfMCTg_70560.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "nOP1blfMCTg_26688.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "scB_bYG27yI_54480.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" },
-        { file: "bqiM7F6TDfo_17184.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+        { file: "nOP1blfMCTg_70560.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "nOP1blfMCTg_26688.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "scB_bYG27yI_54480.webm", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" },
+        { file: "bqiM7F6TDfo_17184.webm", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
     ];
 
+    // Ensure sub3_files points to Generations
     const sub3_files = [
-        // CHANGED PATH: Now points to MAD-Generations/2B/
-        { file: "nOP1blfMCTg_6240.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" },
-        
-        { file: "11660186733224028707_420_000_440_000_144.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" }
+        { file: "nOP1blfMCTg_6240.webm", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" },
+        { file: "11660186733224028707_420_000_440_000_144.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" }
     ];
 
     const sub4_files = [
-        { file: "89454214745557131_3160_000_3180_000_0.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "nOP1blfMCTg_25392.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "fr9s3jqYBvw_12624.mp4", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
-        { file: "G45uV97Bkcc_47184.mp4", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
+        { file: "89454214745557131_3160_000_3180_000_0.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "nOP1blfMCTg_25392.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "fr9s3jqYBvw_12624.webm", model: "MAD-LTX 13B", path: "MAD-Generations/13B/" },
+        { file: "G45uV97Bkcc_47184.webm", model: "MAD-LTX 2B", path: "MAD-Generations/2B/" }
     ];
 
-    const comp_13b_base = ["jKrJezTsVUk_12576.mp4", "nOP1blfMCTg_37104.mp4", "Qb5UT3pSxjI_13728.mp4", "nOP1blfMCTg_25392.mp4", "nOP1blfMCTg_38112.mp4", "JS0gJxhFFJ8_5904.mp4"];
-    const comp_2b_base = ["Eg769aAzmxQ_91920.mp4", "Qb5UT3pSxjI_79968.mp4", "nOP1blfMCTg_6240.mp4", "j4qcANjnLxc_5664.mp4", "JS0gJxhFFJ8_57120.mp4", "bqiM7F6TDfo_17184.mp4"];
-    const svd_base = ["nOP1blfMCTg_25392.mp4", "RyDbs6AnzX0_19152.mp4", "G45uV97Bkcc_48720.mp4", "nOP1blfMCTg_70560.mp4", "94EDSmtNCxM_35376.mp4"];
-    const ctrl_ego_ids = ["14383152291533557785_240_000_260_000_48.mp4", "17136314889476348164_979_560_999_560_0.mp4", "18045724074935084846_6615_900_6635_900_120.mp4"];
-    const abl_noise_base = ["JS0gJxhFFJ8_57120.mp4", "scB_bYG27yI_54480.mp4", "JS0gJxhFFJ8_5904.mp4"];
-    const abl_seg_base = ["12657584952502228282_3940_000_3960_000_0.mp4", "17694030326265859208_2340_000_2360_000_0.mp4", "9024872035982010942_2578_810_2598_810_0.mp4"];
-    const abl_hdmap_base = ["1943605865180232897_680_000_700_000_0.mp4", "3015436519694987712_1300_000_1320_000_0.mp4", "5847910688643719375_180_000_200_000_0.mp4"];
+    const comp_13b_base = ["jKrJezTsVUk_12576.webm", "nOP1blfMCTg_37104.webm", "Qb5UT3pSxjI_13728.webm", "nOP1blfMCTg_25392.webm", "nOP1blfMCTg_38112.webm", "JS0gJxhFFJ8_5904.webm"];
+    const comp_2b_base = ["Eg769aAzmxQ_91920.webm", "Qb5UT3pSxjI_79968.webm", "nOP1blfMCTg_6240.webm", "j4qcANjnLxc_5664.webm", "JS0gJxhFFJ8_57120.webm", "bqiM7F6TDfo_17184.webm"];
+    const svd_base = ["nOP1blfMCTg_25392.webm", "RyDbs6AnzX0_19152.webm", "G45uV97Bkcc_48720.webm", "nOP1blfMCTg_70560.webm", "94EDSmtNCxM_35376.webm"];
+    const ctrl_ego_ids = ["14383152291533557785_240_000_260_000_48.webm", "17136314889476348164_979_560_999_560_0.webm", "18045724074935084846_6615_900_6635_900_120.webm"];
+    const abl_noise_base = ["JS0gJxhFFJ8_57120.webm", "scB_bYG27yI_54480.webm", "JS0gJxhFFJ8_5904.webm"];
+    const abl_seg_base = ["12657584952502228282_3940_000_3960_000_0.webm", "17694030326265859208_2340_000_2360_000_0.webm", "9024872035982010942_2578_810_2598_810_0.webm"];
+    const abl_hdmap_base = ["1943605865180232897_680_000_700_000_0.webm", "3015436519694987712_1300_000_1320_000_0.webm", "5847910688643719375_180_000_200_000_0.webm"];
 
     const CTRL_OBJ_DATA = {
         "1105338229944737854_1280_000_1300_000_48": [[562, 400, 700, 489], [560, 401, 700, 487], [558, 401, 700, 487], [556, 400, 701, 485], [553, 400, 702, 485], [550, 399, 703, 484], [547, 400, 703, 481], [544, 399, 703, 480], [540, 399, 703, 480], [537, 399, 701, 479], [533, 399, 703, 478], [528, 398, 702, 476], [520, 396, 706, 475], [517, 396, 707, 474], [512, 396, 707, 474], [508, 395, 705, 472], [503, 393, 706, 470], [498, 390, 700, 466], [494, 389, 696, 463], [489, 392, 699, 467], [485, 397, 694, 471], [481, 399, 688, 473], [477, 399, 686, 472], [477, 397, 678, 469], [480, 393, 663, 464], [476, 394, 658, 465], [471, 396, 655, 465], [467, 396, 647, 465], [464, 395, 644, 464], [460, 394, 637, 465], [456, 395, 630, 464], [455, 395, 622, 464], [465, 395, 601, 464], null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
@@ -726,11 +725,12 @@
     }
 
     function createVideoHTML(src, label, info) {
+        const webmSrc = src.replace('.mp4', '.webm'); // Force webm extension
         return `
             <div class="video-wrapper">
                 ${label ? `<div class="video-label">${label}</div>` : ''}
                 <div class="video-container-fixed">
-                    <video class="lazy-video" muted loop playsinline data-src="${src}"></video>
+                    <video class="lazy-video" muted loop playsinline data-src="${webmSrc}"></video>
                 </div>
                 ${info ? `<div class="video-info">${info}</div>` : ''}
             </div>
@@ -738,10 +738,11 @@
     }
 
     function createCanvasVideoHTML(src, fileKey) {
+        const webmSrc = src.replace('.mp4', '.webm'); // Force webm extension
         return `
             <div class="video-wrapper bbox-wrapper" data-key="${fileKey}">
                 <div class="video-container-fixed">
-                    <video class="lazy-video bbox-video" muted loop playsinline data-src="${src}"></video>
+                    <video class="lazy-video bbox-video" muted loop playsinline data-src="${webmSrc}"></video>
                     <canvas class="bbox-overlay" width="1056" height="704"></canvas>
                 </div>
             </div>
@@ -897,14 +898,14 @@
 
         const divObj = document.getElementById('ctrl-obj');
         Object.keys(CTRL_OBJ_DATA).forEach(key => {
-            const d1 = document.createElement('div'); d1.innerHTML = createCanvasVideoHTML(`MAD-LTX controls/Object/Cond/${key}.mp4`, key); divObj.appendChild(d1); new BBoxDrawer(d1.querySelector('.bbox-wrapper'));
-            const d2 = document.createElement('div'); d2.innerHTML = createVideoHTML(`MAD-LTX controls/Object/Uncond/${key}.mp4`); divObj.appendChild(d2);
+            const d1 = document.createElement('div'); d1.innerHTML = createCanvasVideoHTML(`MAD-LTX controls/Object/Cond/${key}.webm`, key); divObj.appendChild(d1); new BBoxDrawer(d1.querySelector('.bbox-wrapper'));
+            const d2 = document.createElement('div'); d2.innerHTML = createVideoHTML(`MAD-LTX controls/Object/Uncond/${key}.webm`); divObj.appendChild(d2);
         });
 
         const divText = document.getElementById('ctrl-text');
         Object.keys(CTRL_TEXT_DATA).forEach(key => {
             const row = document.createElement('div'); row.className = 'text-control-item';
-            const vidHtml = createVideoHTML(`MAD-LTX controls/Text/${key}.mp4`);
+            const vidHtml = createVideoHTML(`MAD-LTX controls/Text/${key}.webm`);
             const txtDiv = document.createElement('div'); txtDiv.className = 'text-caption-box'; txtDiv.innerHTML = '<p>' + CTRL_TEXT_DATA[key] + '</p>';
             row.innerHTML = vidHtml; row.appendChild(txtDiv); divText.appendChild(row);
         });
@@ -935,8 +936,8 @@
     // 1. Double Buffering Hero Video to prevent black flash
     function initHeroPlaylist() {
         const heroFiles = [
-            "scB_bYG27yI_83616.mp4", "uvRaCzWpFrQ_50160.mp4", "89454214745557131_3160_000_3180_000_0.mp4",
-            "Eg769aAzmxQ_36192.mp4", "fr9s3jqYBvw_12624.mp4", "nOP1blfMCTg_25392.mp4", "nOP1blfMCTg_26688.mp4"
+            "scB_bYG27yI_83616.webm", "uvRaCzWpFrQ_50160.webm", "89454214745557131_3160_000_3180_000_0.webm",
+            "Eg769aAzmxQ_36192.webm", "fr9s3jqYBvw_12624.webm", "nOP1blfMCTg_25392.webm", "nOP1blfMCTg_26688.webm"
         ];
         const playlist = heroFiles.map(f => `MAD-Generations/13B/${f}`);
         
