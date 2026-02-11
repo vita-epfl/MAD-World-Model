@@ -827,9 +827,9 @@
             list.forEach(item => {
                 let bgSrc, fgSrc;
                 if(item.path.includes("comparisons")) {
-                     bgSrc = `${item.path}rgb_${item.file}`; fgSrc = `${item.path}pose_${item.file}`;
+                      bgSrc = `${item.path}rgb_${item.file}`; fgSrc = `${item.path}pose_${item.file}`;
                 } else {
-                     bgSrc = `${item.path}${item.file}`; fgSrc = `${item.path}pose_${item.file}`;
+                      bgSrc = `${item.path}${item.file}`; fgSrc = `${item.path}pose_${item.file}`;
                 }
                 const d = document.createElement('div');
                 d.innerHTML = createSliderHTML(bgSrc, fgSrc, item.model);
@@ -981,16 +981,18 @@
         v2.addEventListener('ended', playNext);
     }
 
-    // 2. Synced Slider Loader
-    // Ensures two videos wait for each other before playing
+    // 2. Synced Slider Loader (UPDATED to fix lag)
+    // Ensures two videos wait for each other before playing AND pauses when out of view
     function initSyncedLoader() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                const container = entry.target;
+                const v1 = container.querySelector('.layer-1');
+                const v2 = container.querySelector('.layer-2');
+
                 if (entry.isIntersecting) {
-                    const container = entry.target;
-                    const v1 = container.querySelector('.layer-1');
-                    const v2 = container.querySelector('.layer-2');
                     
+                    // LOAD if not already loaded
                     if(v1.dataset.src) { v1.src = v1.dataset.src; delete v1.dataset.src; }
                     if(v2.dataset.src) { v2.src = v2.dataset.src; delete v2.dataset.src; }
                     
@@ -1019,15 +1021,19 @@
                     };
                     checkReady();
                     
-                    observer.unobserve(container);
+                    // IMPORTANT: Removed unobserve so we can pause later
+                } else {
+                    // PAUSE when out of view
+                    if(!v1.paused) v1.pause();
+                    if(!v2.paused) v2.pause();
                 }
             });
-        }, { rootMargin: '200px' });
+        }, { rootMargin: '50px' }); // Reduced margin for more aggressive pausing
 
         document.querySelectorAll('.slider-container').forEach(el => observer.observe(el));
     }
 
-    // 3. Normal Lazy Loader for standard videos
+    // 3. Normal Lazy Loader for standard videos (UPDATED rootMargin)
     function initLazyLoader() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1044,7 +1050,7 @@
                     video.pause();
                 }
             });
-        }, { rootMargin: '200px' });
+        }, { rootMargin: '50px' }); // Reduced margin
         
         // Select only those NOT in sliders (slider videos handled by synced loader)
         document.querySelectorAll('.lazy-video').forEach(v => observer.observe(v));
@@ -1059,7 +1065,7 @@
         renderAblations();
         
         initHeroPlaylist();
-        initSyncedLoader(); // For sliders
+        initSyncedLoader();   // For sliders
         initLazyLoader();   // For standard videos
     });
 
